@@ -1,5 +1,5 @@
 {
-  "name": "weblab-nl/breadcrumb",
+  "name": "weblabnl/breadcrumb",
   "description": "Small library help generating breadcrumbs",
   "require": {
     "php": ">=5.3.0"
