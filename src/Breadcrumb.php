@@ -1,6 +1,6 @@
 <?php
 // the namespace
-namespace Weblab\Breadcrumb;
+namespace Weblab;
 
 /**
  * Class to generate breadcrumbs
@@ -12,7 +12,7 @@ class Breadcrumb {
     /**
      * The singleton instance of the class
      *
-     * @var \Html\Breadcrumb|null
+     * @var \Weblab\Breadcrumb|null
      */
     private static $instance = null;
 
@@ -38,7 +38,7 @@ class Breadcrumb {
     /**
      * Singleton access to the class
      *
-     * @return Breadcrumb|null                  The singleton instance of this class
+     * @return \Weblab\Breadcrumb|null                  The singleton instance of this class
      */
     public static function instance() {
         // if the instance is set already, return it
@@ -47,7 +47,7 @@ class Breadcrumb {
         }
 
         // done, return a new instance
-        return self::$instance = new \Weblab\Breadcrumb\Breadcrumb();
+        return self::$instance = new \Weblab\Breadcrumb();
     }
 
     /**
@@ -74,10 +74,10 @@ class Breadcrumb {
      * @param   string                          The title of the crumble
      * @param   string                          The link of the crumble
      * @param   string|null                     The name of the crumble
-     * @return  \Html\Breadcrumb                The instance of this, to make chaining possible
+     * @return  \Weblab\Breadcrumb              The instance of this, to make chaining possible
      */
     public function addBreadcrumb($title, $link, $name = null) {
-        // set the breadcrumb
+        // add the breadcrumb
         $this->breadcrumbPath[] = array(
             'title' => $title,
             'link'  => $link,
@@ -92,7 +92,7 @@ class Breadcrumb {
      * Set the separator
      *
      * @param   string                      The separator to set
-     * @return  \Html\Breadcrumb            The instance of this, to make chaining possible
+     * @return  \Weblab\Breadcrumb          The instance of this, to make chaining possible
      */
     public function setSeparator($separator) {
         $this->separator = $separator;
