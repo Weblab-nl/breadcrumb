@@ -113,7 +113,7 @@ class Breadcrumb {
         // generate the markup of the breadcrumb path
         $html = array();
         foreach ($breadcrumbPath as $key => $crumble) {
-            $html[] = '<li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">'
+            $html[] = '<li ' . $key + 1 == count($breadcrumbPath) ? 'class="active" ' : '' . 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">'
                     .'<a href="' . $crumble['link'] . '">'
                         . $crumble['title']
                         . '<meta itemprop="name" content="' . $crumble['name'] . '" />'
@@ -124,7 +124,7 @@ class Breadcrumb {
         }
 
         // wrap the breadcrumb list into an unordered list
-        $html = '<ul itemscope itemtype="http://schema.org/BreadcrumbList">' . implode($this->separator(), $html) . '</ul>';
+        $html = '<ul class="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">' . implode($this->separator(), $html) . '</ul>';
 
         // done, return the html markup of the crumble path
         return $html;

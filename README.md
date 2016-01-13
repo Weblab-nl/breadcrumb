@@ -1,2 +1,2 @@
-# FileUpload
-Small library to help upload files
+# Breadcrumb
+Small library to help to create breadcrumbs including rich snippet information
