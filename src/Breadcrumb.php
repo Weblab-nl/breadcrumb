@@ -114,12 +114,12 @@ class Breadcrumb {
         $html = array();
         foreach ($breadcrumbPath as $key => $crumble) {
             $html[] = '<li ' . ($key + 1 == count($breadcrumbPath) ? 'class="active" ' : '') . 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">'
-                    .'<a href="' . $crumble['link'] . '">'
-                        . $crumble['title']
-                        . '<meta itemprop="name" content="' . $crumble['name'] . '" />'
-                    . '</a>'
-                    . '<meta itemprop="url" content="' . $crumble['link'] . '" />'
-                    . '<meta itemprop="position" content="' . ($key + 1) . '" />'
+                .'<a href="' . $crumble['link'] . '">'
+                . $crumble['title']
+                . '<meta itemprop="name" content="' . $crumble['name'] . '" />'
+                . '</a>'
+                . '<meta itemprop="url" content="' . $crumble['link'] . '" />'
+                . '<meta itemprop="position" content="' . ($key + 1) . '" />'
                 . '</li>';
         }
 
@@ -128,5 +128,37 @@ class Breadcrumb {
 
         // done, return the html markup of the crumble path
         return $html;
+    }
+
+    /**
+     * Get the jsonLD breadcrumb document
+     *
+     * @return string               The jsonLD breadcrumb document
+     */
+    public function toJsonLD() {
+        // get the crumble path
+        $breadcrumbPath = $this->breadcrumbPath();
+
+        // create a variable for holding the jsonLD structure
+        $jsonLD = [
+            '@context'          => 'http://schema.org',
+            '@type'             => 'BreadcrumbList',
+            'itemListElement'   => []
+        ];
+
+        // add the breadcrumb path to the jsonLD document
+        foreach ($breadcrumbPath as $key => $crumble) {
+            $jsonLD['itemListElement'][] = [
+                '@type' => 'ListItem',
+                'position' => $key + 1,
+                'item' => [
+                    '@id'   => $crumble['link'],
+                    'name'  => $crumble['name']
+                ]
+            ];
+        }
+
+        // return the jsonLD document
+        return '<script type="application/ld+json">' . json_encode($jsonLD) . '</script>';
     }
 }
