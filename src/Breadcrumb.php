@@ -118,7 +118,7 @@ class Breadcrumb {
                 . $crumble['title']
                 . '<meta itemprop="name" content="' . $crumble['name'] . '" />'
                 . '</a>'
-                . '<meta itemprop="url" content="' . $crumble['link'] . '" />'
+                . '<meta itemprop="item" content="' . $crumble['link'] . '" />'
                 . '<meta itemprop="position" content="' . ($key + 1) . '" />'
                 . '</li>';
         }
