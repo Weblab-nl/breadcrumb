@@ -2,7 +2,9 @@
 
 namespace Weblab\Breadcrumb;
 
-class BreadcrumbFacade
+use Illuminate\Support\Facades\Facade;
+
+class BreadcrumbFacade extends Facade
 {
     /**
      * Get the registered name of the component.
