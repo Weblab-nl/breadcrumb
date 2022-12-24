@@ -2,9 +2,10 @@
 
 namespace Weblab\Breadcrumb;
 
+use Illuminate\Support\ServiceProvider;
 use Weblab\Breadcrumb;
 
-class BreadcrumbServiceProvider
+class BreadcrumbServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
