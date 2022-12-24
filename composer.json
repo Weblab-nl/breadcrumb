@@ -2,11 +2,21 @@
   "name": "weblabnl/breadcrumb",
   "description": "Small library help generating breadcrumbs",
   "require": {
-    "php": ">=5.3.0"
+    "php": ">=7.3.0"
   },
   "autoload": {
     "psr-4": {
       "Weblab\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Weblab\\Breadcrumb\\BreadcrumbServiceProvider"
+      ],
+      "aliases": {
+        "Breadcrumb": "Weblab\\Breadcrumb\\BreadcrumbFacade"
+      }
     }
   }
 }
