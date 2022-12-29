@@ -7,47 +7,31 @@ namespace Weblab;
  *
  * @author Weblab.nl - Thomas Marinissen
  */
-class Breadcrumb {
-
-    /**
-     * The singleton instance of the class
-     *
-     * @var \Weblab\Breadcrumb|null
-     */
-    private static $instance = null;
-
+class Breadcrumb
+{
     /**
      * The different steps of the breadcrumb path
      *
      * @var array
      */
-    private $breadcrumbPath = array();
+    protected $breadcrumbPath = [];
 
     /**
      * The seperator between the crumbs
      *
      * @var string
      */
-    private $separator = ' ';
-
-    /**
-     * Constructor
-     */
-    private function __construct() { }
+    protected $separator = ' ';
 
     /**
      * Singleton access to the class
      *
-     * @return \Weblab\Breadcrumb|null                  The singleton instance of this class
+     * @return Breadcrumb                  The singleton instance of this class
      */
-    public static function instance() {
-        // if the instance is set already, return it
-        if (!is_null(self::$instance)) {
-            return self::$instance;
-        }
-
+    public static function instance(): Breadcrumb
+    {
         // done, return a new instance
-        return self::$instance = new \Weblab\Breadcrumb();
+        return app(Breadcrumb::class);
     }
 
     /**
@@ -55,7 +39,8 @@ class Breadcrumb {
      *
      * @return array                        The breadcrumb path
      */
-    public function breadcrumbPath() {
+    public function breadcrumbPath(): array
+    {
         return $this->breadcrumbPath;
     }
 
@@ -64,24 +49,26 @@ class Breadcrumb {
      *
      * @return string                       The separator
      */
-    public function separator() {
+    public function separator(): string
+    {
         return $this->separator;
     }
 
     /**
      * Add a crumble to the crumble path
      *
-     * @param   string                          The title of the crumble
-     * @param   string                          The link of the crumble
-     * @param   string|null                     The name of the crumble
-     * @return  \Weblab\Breadcrumb              The instance of this, to make chaining possible
+     * @param   string                          $title The title of the crumble
+     * @param   string                          $link The link of the crumble
+     * @param   string|null                     $name The name of the crumble
+     * @return  Breadcrumb                      The instance of this, to make chaining possible
      */
-    public function addBreadcrumb($title, $link, $name = null) {
+    public function addBreadcrumb(string $title, string $link, string $name = null): Breadcrumb
+    {
         // add the breadcrumb
         $this->breadcrumbPath[] = array(
             'title' => $title,
-            'link'  => $link,
-            'name'  => !is_null($name) ? $name : $title,
+            'link' => $link,
+            'name' => !is_null($name) ? $name : $title,
         );
 
         // done, return the instance of this, to make chaining possible
@@ -91,10 +78,11 @@ class Breadcrumb {
     /**
      * Set the separator
      *
-     * @param   string                      The separator to set
-     * @return  \Weblab\Breadcrumb          The instance of this, to make chaining possible
+     * @param   string              $separator The separator to set
+     * @return  Breadcrumb          The instance of this, to make chaining possible
      */
-    public function setSeparator($separator) {
+    public function setSeparator(string $separator): Breadcrumb
+    {
         $this->separator = $separator;
 
         // done, return the instance of this, to make chaining possible
@@ -106,15 +94,16 @@ class Breadcrumb {
      *
      * @return  string                  The string value of the breadcrumb
      */
-    public function __toString() {
+    public function __toString(): string
+    {
         // get the crumble path
         $breadcrumbPath = $this->breadcrumbPath();
 
         // generate the markup of the breadcrumb path
-        $html = array();
+        $html = [];
         foreach ($breadcrumbPath as $key => $crumble) {
             $html[] = '<li ' . ($key + 1 == count($breadcrumbPath) ? 'class="active" ' : '') . 'itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">'
-                .'<a href="' . $crumble['link'] . '">'
+                . '<a href="' . $crumble['link'] . '">'
                 . $crumble['title']
                 . '<meta itemprop="name" content="' . $crumble['name'] . '" />'
                 . '</a>'
@@ -135,15 +124,16 @@ class Breadcrumb {
      *
      * @return string               The jsonLD breadcrumb document
      */
-    public function toJsonLD() {
+    public function toJsonLD(): string
+    {
         // get the crumble path
         $breadcrumbPath = $this->breadcrumbPath();
 
         // create a variable for holding the jsonLD structure
         $jsonLD = [
-            '@context'          => 'http://schema.org',
-            '@type'             => 'BreadcrumbList',
-            'itemListElement'   => []
+            '@context' => 'http://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => []
         ];
 
         // add the breadcrumb path to the jsonLD document
@@ -152,8 +142,8 @@ class Breadcrumb {
                 '@type' => 'ListItem',
                 'position' => $key + 1,
                 'item' => [
-                    '@id'   => $crumble['link'],
-                    'name'  => $crumble['name']
+                    '@id' => $crumble['link'],
+                    'name' => $crumble['name']
                 ]
             ];
         }
